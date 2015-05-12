@@ -5,6 +5,7 @@ import (
 	"text/template"
 	"github.com/QubitProducts/bamboo/services/service"
 	"strings"
+	"strconv"
 )
 
 func hasKey(data map[string]service.Service, appId string) bool {
@@ -23,6 +24,7 @@ func getService(data map[string]service.Service, appId string) service.Service {
 func RenderTemplate(templateName string, templateContent string, data interface{}) (string, error) {
 	funcMap := template.FuncMap{ 
 		"hasKey": hasKey,  
+		"atoi": strconv.Atoi, 
 		"getService": getService,
 		"Split": strings.Split,
 		"Join": strings.Join,
