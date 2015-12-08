@@ -15,13 +15,11 @@ ADD builder/run.sh /run.sh
 
 WORKDIR /opt/go/src/github.com/QubitProducts/bamboo
 
-RUN mkdir -p /opt/go/src/github.com/tools \
-    && git clone https://github.com/tools/godep.git /opt/go/src/github.com/tools/godep \
-    && cd /opt/go/src/github.com/tools/godep \
-    && git fetch origin \
-    && git checkout -b releases origin/releases \
-    && go get github.com/tools/godep && \
-    go get -t github.com/smartystreets/goconvey && \
+RUN mkdir -p /opt/go/bin \
+    && apt-get update \
+    && apt-get install -y curl \
+    && curl https://github.com/tools/godep/releases/download/v32/godep_linux_amd64 > /opt/go/bin/godep \
+    && go get -t github.com/smartystreets/goconvey && \
     go build && \
     ln -s /opt/go/src/github.com/QubitProducts/bamboo /var/bamboo && \
     mkdir -p /run/haproxy && \
